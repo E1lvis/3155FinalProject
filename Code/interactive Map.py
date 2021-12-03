@@ -9,11 +9,11 @@ from dash import html
 from dash.dependencies import Input, Output
 import json
 
-df = pd.read_csv("Datasets\Country level dataset.csv")
+df = pd.read_csv("Final_Website/Datasets/Country level dataset.csv")
 
 app = dash.Dash(__name__)
 
-token = open("Datasets\Country level dataset.csv").read()
+token = open("Final_Website/Datasets/Country level dataset.csv").read()
 
 app.layout = html.Div(children=[
     html.H1(children='Global Waste Management',
