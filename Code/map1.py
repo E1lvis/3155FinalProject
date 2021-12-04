@@ -8,7 +8,7 @@ from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
 import json
-df = pd.read_csv("Final_Website/Datasets/Country level dataset.csv")
+df = pd.read_csv("Datasets\Country level dataset.csv")
 
 fig = go.Figure(data=go.Choropleth(
     locations = df['iso3c'],
@@ -25,6 +25,22 @@ fig = go.Figure(data=go.Choropleth(
 
 ))
 
+fig.update_layout(
+    title_text = 'text',
+    geo = dict(
+        showframe = False,
+        showcoastlines = False,
+        projection_type = 'equirectangular'
+    ),
+    annotations = [dict(
 
+        x = 0.55,
+        y = 0.1,
+        xref = 'paper',
+        yref = 'paper',
+        text = 'text 2',
+        showarrow = False
+    )]
+)
 
 fig.show()
