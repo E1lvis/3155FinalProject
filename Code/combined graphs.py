@@ -13,6 +13,7 @@ import json
 
 df = pd.read_csv("Datasets\Country level dataset.csv")
 df2 = pd.read_csv("Datasets\City level dataset.csv")
+df3 = pd.read_csv("Datasets\Country level dataset rounded.csv")
 app = dash.Dash(__name__)
 
 
@@ -31,21 +32,22 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.Hr(style={'color': '#&FDBFF'}),
-    html.H3('Interactive Map', style={'color': '#df1e56'}),
-    html.Div("This map represents different data for waste around the world"),
+    html.H3('Interactive Map', style={'color': '#df1e56', 'textAlign': 'center'}),
+    html.Div("This map represents different data for waste around the world", style={ 'textAlign': 'center'}),
     dcc.Graph(id='map1'),
 
     html.Div('Grey areas have not had information reported', style={'textAlign': 'center'}),
 
-    html.Div('please select data to present', style={'color': '#ef3e18', 'margin':'10px'}),
+    html.Div('Please select data to present', style={'color': '#ef3e18', 'margin':'10px'}),
+    html.Div('Current Data:'),
     dcc.Dropdown(
         id='Data',
         value='waste_collection_coverage_total_percent_of_population',
         options=[
             #we might need to recheck these later
-            {'label': 'Total MSW', 'value': 'total_msw_total_msw_generated_tons_year'},
-            {'label': 'GDP', 'value': 'gdp'},
-            {'label': 'Percent of population covered by a waste system', 'value': 'waste_collection_coverage_total_percent_of_population'}
+            {'label': 'Total MSW (Measured in Tons)', 'value': 'total_msw_total_msw_generated_tons_year'},
+            #{'label': 'GDP', 'value': 'gdp'},
+            {'label': 'Percent of population covered by a waste system (PERCENTAGE)', 'value': 'waste_collection_coverage_total_percent_of_population'}
             
 
         ],
@@ -57,10 +59,11 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.Hr(style={'color': '#&FDBFF'}),
-    html.H3('Interactive Bar Chart', style={'color': '#df1e56'}),
-    html.Div("This bar graph represents the percent compostion of overall waste by region"),
+    html.H3('Interactive Bar Chart', style={'color': '#df1e56', 'textAlign': 'center'}),
+    html.Div("This bar graph represents the percent compostion of overall waste by region", style={'textAlign': 'center'}),
     dcc.Graph(id='bar1'),
-    html.Div('please select a region', style={'color': '#ef3e18', 'margin':'10px'}),
+    html.Div('please select a region and composition type', style={'color': '#ef3e18', 'margin':'10px'}),
+    html.Div('Current Data:'),
     dcc.Dropdown(
         id='select region',
         value='NAC',
@@ -99,11 +102,12 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.Br(),
-    html.Div("This bar graph represents the percent compostion of cities by region"),
+    html.Div("This bar graph represents the percent compostion of available city data by region", style={'textAlign': 'center'}),
 
     dcc.Graph(id='bar2'),
-    html.Div('please select a region', style={'color': '#ef3e18', 'margin':'10px'}),
+    html.Div('please select a region and composition type', style={'color': '#ef3e18', 'margin':'10px'}),
     html.Div('Empty bars have not had data reported', style={'textAlign': 'center'}),
+    html.Div('Current Data:'),
     dcc.Dropdown(
         id='select region1',
         value='NAC',
@@ -144,13 +148,33 @@ app.layout = html.Div(children=[
     html.Br(),
     html.Br(),
     html.Br(),
-    html.H3('Interactive Globe', style={'color': '#df1e56'}),
-    html.Div("This globe shows global population data, rotate globe to explore different regions"),
-    dcc.Graph(figure= px.scatter_geo(df, locations="iso3c",
-                     color="region_id", # which column to use to set the color of markers
-                     hover_name="country_name", # column added to hover information
-                     size='population_population_number_of_people', # size of markers
-                     projection="orthographic")),
+    html.H3('Interactive Globe', style={'color': '#df1e56', 'textAlign': 'center'}),
+    html.Div("This globe represents special types of waste in tons around the world, hover over for specific information", style={'textAlign': 'center'}),
+    dcc.Graph(id='globe1'),
+    html.Div('Areas with no bubbles or values of 0 have no data reported', style={'textAlign': 'center'}),
+
+    html.Div('Please select data to present', style={'color': '#ef3e18', 'margin':'10px'}),
+    html.Div('Current Data:'),
+    dcc.Dropdown(
+        id='Data for globe',
+        value='special_waste_industrial_waste_tons_year',
+        options=[
+               
+                {'label': 'Agricultural', 'value': 'special_waste_agricultural_waste_tons_year'},
+                {'label': 'Construction Waste', 'value': 'special_waste_construction_and_demolition_waste_tons_year'},
+                {'label': 'E waste', 'value': 'special_waste_e_waste_tons_year'},
+                {'label': 'Hazardous', 'value': 'special_waste_hazardous_waste_tons_year'},
+                {'label': 'Industrial', 'value': 'special_waste_industrial_waste_tons_year'},
+                {'label': 'Medical', 'value': 'special_waste_medical_waste_tons_year'},
+                #{'label': 'Total MSW', 'value': 'total_msw_total_msw_generated_tons_year'}
+                ],
+        
+        
+        ),
+    html.Br(),
+    html.Br(),
+    html.Br(),
+    html.Br(),
 
     html.Br(),
     html.Br(),
@@ -203,5 +227,19 @@ def updateCityGraph(selectedRegion, selectedComposition):
   
     fig = px.bar(filteredDF, x='city_name',y= selectedComposition, labels={selectedComposition: 'percentage', 'city_name': 'City'} )
     return fig
+
+@app.callback(
+            Output('globe1', 'figure'),
+            [Input('Data for globe', 'value'),
+            ])
+def updateGlobe(selectedData):
+   
+    figure= px.scatter_geo(df3, locations="iso3c",
+                     color="region_id", # which column to use to set the color of markers
+                     hover_name="country_name", # column added to hover information
+                     
+                     size= selectedData, # size of markers
+                     projection="orthographic")
+    return figure
 
 app.run_server(debug=True)
