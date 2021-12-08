@@ -1,0 +1,80 @@
+html{
+  background:url(../images/waste.jpg);
+  background-size: 100% 100%;
+}
+body{
+        border: 10px solid black;
+        padding: 100px;
+        background: rgba(0,206,209,0.7);
+    }
+    .NavigationBar {
+  background-color: black;
+  overflow: hidden;
+}
+
+.NavigationBar a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.NavigationBar a:hover {
+  background-color: orange;
+  color: black;
+}
+
+.NavigationBar active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+h1{
+  color:navy;
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: "Lucida Console", "Courier New", monospace;
+  text-align: center;
+}
+#welcome{
+    font-weight: bold;
+
+  color:crimson;
+  text-align: center;
+  position:static;
+  font-family:"Optima", sans-serif;
+}
+
+h2{
+  color:maroon;
+  font-family: fantasy;
+  font-size: 34px
+}
+
+p,ul{
+  color:#5e001f;
+  font-size: 20px;
+  font-family:monospace;
+}
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+figcaption{
+  text-align: center;
+  font-style:italic;
+}
+
+
+
+a{
+  color:blue;
+}
+
+#center,#center1{
+  text-align: center
+}
