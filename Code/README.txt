@@ -1,0 +1,1 @@
+If graphs do not run from wesite link please run combined graphs.py and open the link provided in the terminal to view graphs.
