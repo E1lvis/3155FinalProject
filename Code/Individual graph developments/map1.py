@@ -17,6 +17,7 @@ fig = go.Figure(data=go.Choropleth(
     colorscale = 'Blues',
     autocolorscale = True,
     reversescale = False,
+    
     marker_line_color = 'darkgray',
     marker_line_width = 0.5,
     colorbar_tickprefix = 'Tons ',

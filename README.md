@@ -1,1 +1,1 @@
-# 3155FinalProject
+Website and graph code are in the code folder, please read 'readme' file in case of issues or for website link

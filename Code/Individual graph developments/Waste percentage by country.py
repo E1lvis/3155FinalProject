@@ -68,6 +68,9 @@ app.layout = html.Div(children=[
     
 ])
 
+
+
+#updating the graph from the user selected info from dropdown bar
 @app.callback(
             Output('bar1', 'figure'),
             [Input('select region', 'value'),
@@ -81,23 +84,7 @@ def updateFigure(selectedRegion, selectedComposition):
     return fig
 
 
-#filteredDF = df[df['region_id'] == 'NAC']
-#values = ['composition_food_organic_waste_percent', 'composition_metal_percent']
-#finalDF = filteredDF.groupby(['country_name'])['composition_food_organic_waste_percent'].sum().reset_index()
 
-#filteredDF = filteredDF.apply(lambda x: x.str.strip() if x.dtype == "NA" else x)
-
-#df = px.data.gapminder().query("country_name == Aruba")
-
-#df.loc[df["gdp"] < 10000, "country_name"]
-
-
-
-#fig = px.bar(filteredDF, x='country_name', y='composition_food_organic_waste_percent')
-#fig = px.pie(filteredDF, values=values, names='country_name', title="test pie graph")
-#fig = px.pie(finalDF, values="composition_food_organic_waste_percent", names="country_name", title="test pie graph")
-
-#fig.show()
 
 #if __name__ == '__main__':
 #    app.run_server()
